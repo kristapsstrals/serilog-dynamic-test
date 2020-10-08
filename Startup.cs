@@ -5,6 +5,9 @@ namespace SerilogDynamicTest
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Serilog;
+    using Serilog.Core;
+    using Serilog.Events;
 
     public class Startup
     {
@@ -18,6 +21,17 @@ namespace SerilogDynamicTest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var levelSwitch = new LoggingLevelSwitch();
+            levelSwitch.MinimumLevel = LogEventLevel.Information;
+            var log = new LoggerConfiguration()
+                .MinimumLevel.ControlledBy(levelSwitch)
+                .WriteTo.Console()
+                .CreateLogger();
+
+            Log.Logger = log;
+
+            services.AddSingleton<ILoggingService>(new LoggingService(levelSwitch));
+
             services.AddControllers();
         }
 

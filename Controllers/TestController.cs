@@ -1,8 +1,5 @@
 namespace SerilogDynamicTest.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
     using Serilog;
     using Serilog.Events;
@@ -11,11 +8,6 @@ namespace SerilogDynamicTest.Controllers
     [Route("[controller]")]
     public class TestController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         static ILogger Logger = Log.ForContext<TestController>();
         readonly ILoggingService _loggingService;
 
